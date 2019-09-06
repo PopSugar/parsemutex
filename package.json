@@ -1,0 +1,26 @@
+{
+  "name": "parsemutex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf ./dist && ./node_modules/.bin/tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PopSugar/parsemutex.git"
+  },
+  "author": "lcpmarvel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PopSugar/parsemutex/issues"
+  },
+  "homepage": "https://github.com/PopSugar/parsemutex#readme",
+  "devDependencies": {
+    "@types/mongodb": "^3.2.0",
+    "tslint": "^5.18.0",
+    "typescript": "^3.6.2",
+    "mongodb": "^3.2.0"
+  }
+}
