@@ -41,7 +41,8 @@ export default class ParseMutex {
 
   private connect() {
     const client = new MongoClient(this.databaseURI, {
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useUnifiedTopology: true
     });
 
     return new Promise<Db>((resolve, reject) => {
