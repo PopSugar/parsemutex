@@ -1,6 +1,6 @@
 {
   "name": "@PopSugar/parsemutex",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -17,11 +17,13 @@
     "url": "https://github.com/PopSugar/parsemutex/issues"
   },
   "homepage": "https://github.com/PopSugar/parsemutex#readme",
+  "dependencies": {
+    "mongodb": "^3.2.0"
+  },
   "devDependencies": {
     "@types/mongodb": "^3.2.0",
     "tslint": "^5.18.0",
-    "typescript": "^3.6.2",
-    "mongodb": "^3.2.0"
+    "typescript": "^3.6.2"
   },
   "publishConfig": {
     "registry":"https://npm.pkg.github.com/"
