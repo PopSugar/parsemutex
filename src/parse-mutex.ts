@@ -1,4 +1,4 @@
-import { MongoClient, Db } from 'mongodb';
+import { MongoClient, Db, Collection } from 'mongodb';
 
 const namespace = '_ParseMutex';
 
@@ -22,33 +22,39 @@ export default class ParseMutex {
 
         collection.insertOne({ key })
           .then(() => {
-            callback();
-
-            setTimeout(() => {
-              collection.deleteOne({ key });
-            }, 1000);
+            try {
+              callback();
+            } finally {
+              this.unlock(collection, key);
+            }
           })
-          .catch(() => {})
-      })
+          .catch(() => {});
+      });
     });
+  }
+
+  public unlock(collection: Collection, key: string) {
+    setTimeout(() => {
+      collection.deleteOne({ key });
+    }, 1000);
   }
 
   public execute(callback: (db: Db) => void) {
     this.connection
       .then((db) => callback(db))
-      .catch((reason) => { throw new Error(reason) });
+      .catch((reason) => { throw new Error(reason); });
   }
 
   private connect() {
     const client = new MongoClient(this.databaseURI, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     });
 
     return new Promise<Db>((resolve, reject) => {
       client.connect()
         .then((clientHandler) => {
-          resolve(clientHandler.db(this.dbName))
+          resolve(clientHandler.db(this.dbName));
         })
         .catch((reason) => {
           reject(reason);
@@ -62,9 +68,9 @@ export default class ParseMutex {
         if (error) {
           db.createCollection(namespace)
             .then(() => db.createIndex(namespace, 'key', { unique: true }))
-            .catch((reason) => { throw new Error(reason) });
+            .catch((reason) => { throw new Error(reason); });
         }
-      })
-    })
+      });
+    });
   }
 }
